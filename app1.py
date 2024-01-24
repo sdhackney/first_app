@@ -1,8 +1,9 @@
-import streamlit as st
+import pandas as pd
 import scipy.stats
 import streamlit as st
 import time
 
+# these are stateful variables which are preserved as Streamlin reruns this script
 if 'experiment_no' not in st.session_state:
     st.session_state['experiment_no'] = 0
 
@@ -10,6 +11,7 @@ if 'df_experiment_results' not in st.session_state:
     st.session_state['df_experiment_results'] = pd.DataFrame(columns=['no', 'iterations', 'mean'])
 
 st.header('Tossing a Coin')
+
 chart = st.line_chart([0.5])
 
 def toss_coin(n):
@@ -29,7 +31,7 @@ def toss_coin(n):
         time.sleep(0.05)
 
     return mean
-    
+
 number_of_trials = st.slider('Number of trials?', 1, 1000, 10)
 start_button = st.button('Run')
 
@@ -49,5 +51,4 @@ if start_button:
         st.session_state['df_experiment_results'].reset_index(drop=True)
 
 st.write(st.session_state['df_experiment_results'])
-
 
